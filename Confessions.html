@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confession Wall | Miss Know It All</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Kalam:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .handwritten { font-family: 'Kalam', cursive; }
+        .confession-card { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-indigo-50 min-h-screen">
+
+    <nav class="p-6 flex justify-between items-center bg-white shadow-sm">
+        <a href="index.html" class="font-bold text-indigo-600 text-xl">← Miss Know It All</a>
+        <span class="text-slate-400 text-sm italic underline">Total Anonymity Guaranteed</span>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-slate-900 mb-4">The Confession Wall</h1>
+            <p class="text-slate-600">Get it off your chest. No names, no judgments, just release.</p>
+        </header>
+
+        <div class="bg-white p-6 rounded-2xl shadow-xl border border-indigo-100 mb-16">
+            <textarea id="confessionInput" rows="3" 
+                class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-lg" 
+                placeholder="What's on your mind today?"></textarea>
+            <div class="flex justify-end mt-4">
+                <button onclick="addConfession()" 
+                    class="bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-indigo-700 transition transform active:scale-95">
+                    Post Anonymously
+                </button>
+            </div>
+        </div>
+
+        <div id="wall" class="grid md:grid-cols-2 gap-6">
+            <div class="confession-card bg-white p-8 rounded-lg shadow-sm border-l-4 border-indigo-400">
+                <p class="handwritten text-xl text-slate-700">"I'm a straight-A student but I feel like an imposter every single day. I'm terrified of failing my finals."</p>
+                <p class="mt-4 text-xs text-slate-400 uppercase tracking-widest">2 hours ago</p>
+            </div>
+
+            <div class="confession-card bg-white p-8 rounded-lg shadow-sm border-l-4 border-pink-400">
+                <p class="handwritten text-xl text-slate-700">"I haven't told my parents I changed my major. The guilt is eating me alive, but I love art so much more than meds."</p>
+                <p class="mt-4 text-xs text-slate-400 uppercase tracking-widest">5 hours ago</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function addConfession() {
+            const input = document.getElementById('confessionInput');
+            const wall = document.getElementById('wall');
+
+            if (input.value.trim() === "") {
+                alert("Please write something first!");
+                return;
+            }
+
+            // Create new card
+            const card = document.createElement('div');
+            card.className = "confession-card bg-white p-8 rounded-lg shadow-md border-l-4 border-green-400";
+            
+            // Randomize border color for variety
+            const colors = ['border-indigo-400', 'border-pink-400', 'border-yellow-400', 'border-green-400', 'border-purple-400'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            card.className = `confession-card bg-white p-8 rounded-lg shadow-md border-l-4 ${randomColor}`;
+
+            card.innerHTML = `
+                <p class="handwritten text-xl text-slate-700">"${input.value}"</p>
+                <p class="mt-4 text-xs text-slate-400 uppercase tracking-widest">Just now</p>
+            `;
+
+            // Add to wall
+            wall.prepend(card);
+
+            // Clear input
+            input.value = "";
+        }
+    </script>
+
+</body>
+</html>
